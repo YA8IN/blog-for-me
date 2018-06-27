@@ -1,13 +1,6 @@
 {% extends "base.html" %}
 {% block body %}
-<div class="blog-masthead">
-    <div class="container">
-      <nav class="blog-nav">
-        <a class="blog-nav-item active" href="#">Home</a>
-        <a class="blog-nav-item" href="#">About</a>
-      </nav>
-    </div>
-</div>
+{% include "navbar.html" %}
 <div class="container">
   <div class="blog-header">
     <h1 class="blog-title">Yubin Blog</h1>
@@ -17,20 +10,32 @@
     <div class="col-sm-8">
       <div class="blog-post">
         {% for article in article_list %}
-        <h2 class="blog-post-title">{{ article.title }}</h2>
+        <h2 class="blog-post-title">
+          <a href="{{article.id}}">
+          {{ article.title }}
+          </a>
+        </h2>
         <p>{{ article.content }}</p>
         {% endfor %}
       </div>
     </div>
     <div class="col-sm-3 col-sm-offset-1 blogside">
       <div class="sidebar-moduel">
+        <h4>Categories</h4>
+        <ol class="list-unstyled">
+          <li><a href="/">all</a></li>
+          {% for alias, category in category_list %}
+          <li><a href="/?category={{ alias }}">{{ category }}</a></li>
+          {% endfor %}
+      </div>
+      <div class="sidebar-moduel">
         <h4>Hashtags</h4>
         <ol class="list-unstyled">
           {% for hashtag in hashtag_list %}
-          <li>#{{ hashtag }}</li>
+          <li><a href="/?hashtag={{ hashtag.name }}">
+          #{{ hashtag }}</a></li>
           {% endfor %}
       </div>
-      <div class="sidebar-moduel"></div>
     </div>
   </div>
 </div>
